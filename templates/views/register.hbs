@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+{{>header}}
+<body> 
+    {{>navbar}}     
+<div class="main-content">
+<div class="container">
+    <div class="row">
+    <div class="col s12 m8 offset-m2">
+      
+        <div class="card card-panel blue-grey darken-3">
+        <div class="card-content white-text">
+            <a href="/register" class="waves-effect waves-light btn btn-wide">Sign Up</a>
+            <a href="/" class="opacity right waves-effect waves-light btn btn-wide">Log In</a>
+                   <h2 class="flow-text center">{{title}}</h2>
+            <form id="register" action="/register" method="post">               
+                <div class="row">
+                    <div class="input-field col s6">
+                        <input id="first_name" type="text" class="validate" required>
+                        <label for="first_name">First Name</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input id="last_name" type="text" class="validate" required>
+                        <label for="last_name">Last Name</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                    <input id="password" type="password" class="validate" required minlength="6">
+                    <label for="password">Password</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                    <input id="email" type="email" class="validate">
+                    <label for="email">Email</label>
+                    </div>
+                </div>
+                <button class="btn btn-center waves-effect waves-light" type="submit" name="action">Register
+                <i class="material-icons right">send</i>
+                </button>       
+            </form>
+        </div>
+        </div>
+      </div>
+    </div>
+</div>
+<script src="/js/reg.js"></script>
+{{>footer}}

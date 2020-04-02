@@ -1,0 +1,115 @@
+/* label color */
+   .input-field label {
+     color: #e2e2e2;
+   }
+
+/*custom fixes*/
+input[type=text]:not(.browser-default):focus:not([readonly])+label{
+  color: #fff;
+}
+input[type=text]:not(.browser-default):focus:not([readonly]){
+  border-bottom-color: #fff;
+  box-shadow: 0 1px 0 0 #fff;
+}
+
+input[type=password]:not(.browser-default):focus:not([readonly])+label{
+  color: #fff;
+}
+input[type=password]:not(.browser-default):focus:not([readonly]){
+  border-bottom-color: #fff;
+  box-shadow: 0 1px 0 0 #fff;
+}
+
+input[type=email]:not(.browser-default):focus:not([readonly])+label{
+  color: #fff;
+}
+input[type=email]:not(.browser-default):focus:not([readonly]){
+  border-bottom-color: #fff;
+  box-shadow: 0 1px 0 0 #fff;
+}
+
+   /* label focus color */
+   .input-field input[type=text]:focus+label {
+     color: #e2e2e2;
+   }
+   /* label underline focus color */
+   .input-field input[type=text]:focus {
+     border-bottom: 1px solid #e2e2e2;
+     box-shadow: 0 1px 0 0 #000;
+   }
+   /* valid color */
+   .input-field input[type=text].valid, input[type=text].validate{
+      color: white;
+     border-bottom: 1px solid #e2e2e2;
+     box-shadow: 0 1px 0 0 #000;
+   }
+
+.input-field input[type=text].valid:focus, input[type=text].validate:active{
+  text-decoration-style:solid;
+}
+  /*change selected text background */
+  .input-field ::selection{
+     background: #eee;
+   }
+
+   .input-field input[type=password].valid, input[type=password].validate{
+       color: white;
+     border-bottom: 1px solid #e2e2e2;
+     box-shadow: 0 1px 0 0 #000;
+   }
+
+   .input-field input[type=email].valid, input[type=email].validate{
+       color: white;
+     border-bottom: 1px solid #e2e2e2;
+     box-shadow: 0 1px 0 0 #000;
+   }
+   /* invalid color */
+   .input-field input[type=text].invalid {
+     border-bottom: 1px solid #e2e2e2;
+     box-shadow: 0 1px 0 0 #000;
+   }
+
+  .input-field input[type=email].invalid {
+      color: red;
+      background-color: #FFF;
+      border-bottom: 1px solid #e2e2e2;
+      box-shadow: 0 1px 0 0 #000;
+    }
+
+   /* icon prefix focus color */
+   .input-field .prefix.active {
+     color: #e2e2e2;
+   }
+
+   .btn-wide{
+     width: 48%;
+   }
+   .btn-center{
+     max-width: 58%;
+     margin:0 auto;
+     display: block;
+     padding: 0 15px;
+   }
+
+   body{
+     background: url('/images/bg.jpg');
+   }
+
+   .forgot-rite{
+     text-align: right;
+     margin-top: -20px;
+     margin-bottom: 20px;
+   }
+   .forgot-rite >a{
+     color: #fff;
+   }
+   .forgot-rite >a:hover{
+     text-shadow:
+   -1px -1px 0 #000,  
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+     1px 1px 0 #000;
+   }
+   .opacity{
+     opacity: .5;
+   }

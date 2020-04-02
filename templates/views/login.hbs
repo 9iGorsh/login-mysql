@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+{{>header}}
+<body>
+       {{>navbar}}   
+<div class="main-content">
+<div class="container">
+    <div class="row">
+    <div class="col s12 m8 offset-m2">
+      
+        <div class="card card-panel blue-grey darken-3">
+        <div class="card-content white-text">
+            <a href="/register" class="opacity waves-effect waves-light btn btn-wide">Sign Up</a>
+            <a href="/" class="right waves-effect waves-light btn btn-wide">Log In</a>
+                   <h2 class="flow-text center">{{title}}</h2>
+            <form action="/" method="post">               
+                <div class="row">
+                    <div class="input-field col s12">
+                    <input type="email" id="email" name="email" class="validate" required>
+                    <label for="email">Email</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                    <input type="password" id="password" name="password" class="validate" minlength="6" required>
+                    <label for="password">Password</label>
+                    </div>
+                </div>
+                <div class="forgot-rite">
+                    <a href="/forgot">Fogot your password?</a>
+                </div>   
+                <button class="btn btn-center waves-effect waves-light" type="submit" name="action">Log In
+                <i class="material-icons right">send</i>
+                </button>       
+            </form>
+        </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+{{>footer}}
