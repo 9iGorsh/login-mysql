@@ -113,3 +113,25 @@ input[type=email]:not(.browser-default):focus:not([readonly]){
    .opacity{
      opacity: .5;
    }
+
+   .base{
+     position: relative;
+   }
+
+   .emailForPass{
+     text-align: center;
+   }
+   .pass-match{
+     display: none;
+   }
+   .pass-match--visible{
+     position: absolute;
+     bottom: 6px;
+     left:0;
+     right:0;
+     display: block;
+     text-align: center;
+     background: #fff;
+     color:red;
+     padding: 5px;
+   }

@@ -9,7 +9,7 @@ const session =require('express-session');
 const FileStore =require('session-file-store')(session);
 const bodyParser =require('body-parser');
 const { passport } =require('./middleware/passport');
-const mysql =require('mysql');
+// const mysql =require('mysql');
 
 const app =express();
 app.use(cors());
@@ -36,13 +36,13 @@ app.use(session({
       console.log(`Request object sessionID from client: ${req.sessionID}`)
       return uuidv4() // use UUIDs for session IDs
     },
-    store: new FileStore(),
+    // store: new FileStore(), //defaults to a new MemoryStore instance
     secret: 'keyboard cat',
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: true,
     cookie: {
         httpOnly: true,
-        secure: true,
+        // secure: true, //for https
         // domain: 'example.com',
         // Cookie will expire in 1 hour from when it's generated 
         expires: new Date( Date.now() + 60 * 60 * 1000 )
@@ -53,10 +53,15 @@ app.use(passport.session());
 
 app.use('/', require('./routes/auth/login'));
 app.use('/register', require('./routes/auth/register'));
-app.use('/authrequired', require('./routes/auth/authrequired'));
+// app.use('/authrequired', require('./routes/auth/authrequired'));
 app.use('/profile', require('./routes/auth/profile'));
 app.use('/error', require('./routes/auth/error'));
 app.use('/logout', require('./routes/auth/logout'));
+app.use('/verify', require('./routes/auth/verify'));
+app.use('/forgot', require('./routes/auth/forgot'));
+app.use('/resetpass', require('./routes/auth/resetpass'));
+app.use('/dashboard', require('./routes/auth/dashboard'));
+app.use('/passchange', require('./routes/auth/passchange'));
 
  app.get('/success', (req,res) =>{
     res.render('success',{
@@ -64,12 +69,6 @@ app.use('/logout', require('./routes/auth/logout'));
         name:'Игорь'
     })
  });
- app.get('/forgot', (req,res) =>{
-    res.render('forgot',{
-        title:'Reset Your Password',
-        name:'Игорь'
-    })
- })
 
 const PORT =process.env.PORT || 4000;
 app.listen(PORT, () =>(

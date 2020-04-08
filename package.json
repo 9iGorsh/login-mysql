@@ -15,9 +15,11 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-session": "^1.17.0",
-    "hbs": "^4.1.0",
+    "hbs": "4.1.1",
+    "jsonwebtoken": "^8.5.1",
     "materialize-css": "^1.0.0",
     "mysql": "^2.18.1",
+    "nodemailer": "^6.4.6",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "session-file-store": "^1.4.0",
@@ -25,5 +27,8 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.2"
+  },
+  "resolutions": {
+    "minimist": "^1.2.5"
   }
 }

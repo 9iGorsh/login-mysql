@@ -1,20 +1,25 @@
-const submit =document.querySelector('#register');
+const submit =document.querySelector('#resetpass');
+const err =document.querySelector('.pass-match');
+const email =document.querySelector('.emailForPass').textContent;
 
 submit.addEventListener('submit', async(e) =>{
     e.preventDefault();
+    const password1 =document.querySelector("#password1").value;
+    const password2 =document.querySelector("#password2").value;
 
-    const email =document.querySelector('#email').value;
-    const first_name =document.querySelector('#first_name').value;
-    const last_name =document.querySelector('#last_name').value;
-    const password =document.querySelector("#password").value;
+    if(password1!==password2){
+        err.classList.add('pass-match--visible');
+        return setTimeout(() =>{
+          err.classList.remove('pass-match--visible');
+        }, 1500);          
+    }
+        const data={
+            password:password1,
+            email
+        }; 
+        console.log('Reset form data ' ,data)     
 
-const data={
-    email,
-    first_name,
-    last_name,
-    password
-};
-    const response =await fetch('/register', {
+    const response =await fetch('/resetpass', {
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
         credentials: 'same-origin', // include, *same-origin, omit
@@ -30,7 +35,7 @@ const data={
     return window.location.href='/error';
   }
   if(resJSON.page==='profile'){
+    console.log('res.json with profile received')
     return window.location.href='/profile';
   }
-
 });

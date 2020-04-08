@@ -1,15 +1,22 @@
 const express =require('express');
 const router =express.Router();
 
-router.get('/', (req,res) =>{
-    req.session.destroy((err) =>{
-        // cannot access session here
-        if(err){console.error(err);}
-      });
-    res.render('logout',{
-        title:'Error!',
-        name:'Игорь'
+router.get('/', async(req,res) =>{
+    const sessionDestroy =await new Promise((resolve, reject) =>{
+      req.session.destroy((err) =>{
+        console.log('Session destroy fired');
+        if(err){
+          return console.error(err);
+        }
+        resolve(true);
+      })
     });
+
+    if(sessionDestroy){
+      console.log('After session destroy')
+      res.render('logout',{
+      });
+    }
  });
 
  module.exports = router;

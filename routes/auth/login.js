@@ -7,12 +7,15 @@ router.get('/', (req,res) =>{
     console.log('Inside login GET route CB function');
     console.log(req.sessionID);
     // const uniqueId = uuidv4();
-
-    res.render('login',{
-        title:`Welcome Back`,
-        name:'Игорь'
-    })
+      if(!req.user && !req.isAuthenticated()){
+        return res.render('login',{
+          title:`Welcome Back`,
+          name:'Игорь'
+        })
+      }
+      return res.redirect('/dashboard');  
 });
+
 router.post('/', (req,res,next) =>{
     console.log('Inside login POST route CB function'); 
      passport.authenticate('local', (err, user, info) =>{
@@ -28,15 +31,24 @@ router.post('/', (req,res,next) =>{
             descr:`${info.message}`
           });
            return res.redirect('/error'); 
-          }
-        req.logIn(user, (err) => {
+          } 
+        req.login(user, (err) => {
           console.log('Inside req.login() callback')
           console.log(`req.session.passport: ${JSON.stringify(req.session.passport)}`)
           console.log(`req.user: ${JSON.stringify(req.user)}`)
           console.log('You were authenticated & logged in!\n');
-          console.log('req.sesion:',req.session.views)
+          console.log('req.session.views:',req.session.views)
+          console.log('req.isAuthenticated ? ',req.isAuthenticated());
 
           if (err) { return next(err); }
+          if (user) {
+            req.user = user;
+            delete req.user.password; // delete the password from the session
+            // req.session.user = user;  //refresh the session value
+            res.locals.user = user;
+            req.session.isAuthenticated =req.isAuthenticated();
+          }
+          // console.log('UUUSSSSEEEERRR', req.session.user)
           if(user.active==0){
               req.app.set('g_lobal',{
               title:'Welcome',
@@ -52,9 +64,10 @@ router.post('/', (req,res,next) =>{
             descr:'Glad to see you back!'
             });
           }
-          return res.redirect('/profile');
+          console.log('REQ.Passport ? ',req.session.passport);
+          return res.redirect('/dashboard');
         })
-      })(req, res, next)
+      })(req, res, next)    
 });
 
 module.exports = router;

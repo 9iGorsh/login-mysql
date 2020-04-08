@@ -2,30 +2,24 @@ const express =require('express');
 const router =express.Router();
 const { pool } =require('../../db');
 const bcrypt =require('bcrypt');
+const { mail } =require('../../mailer/mail');
 
 router.get('/', (req,res) =>{
-    res.render('register',{
-        title:'Sign Up for Free',
-        name:'Игорь'
-    })
+    if(!req.user && !req.isAuthenticated()){
+        return res.render('register',{
+          title:`Sign Up for Free`,
+          name:'Игорь'
+        })
+      }
+    return res.redirect('/dashboard'); 
  });
 
- const connect =() =>{
-    return new Promise((resolve, reject) => {
-         pool.getConnection((err, connection) => {
-             return err ? reject(err) : resolve(connection)
-         })
-     })
-};
-
- router.post('/', (req,res,next) =>{
+ router.post('/', (req,res) =>{
     console.log('Inside register POST route CB function'); 
      
     const{first_name, last_name, email, password} =req.body;
 
     const makeConnection =() =>{
-        // console.log('Call connect():',connect())
-        // const connection =await connect();
         pool.getConnection(async(err, connection) => {
             if(err){
                 console.error("CONNECTION ERROR:",err);
@@ -46,7 +40,7 @@ router.get('/', (req,res) =>{
             });
         })
         )
-        console.log('USER:',user)
+        console.log('USER exists ?:',user)
      
         if (user) {
             console.log('User exists triggered!');///////////////
@@ -56,7 +50,7 @@ router.get('/', (req,res) =>{
                 email:'',
                 descr:`User ${email} already exists.`
                 });
-            return res.json({msg:'error'});
+            return res.json({page:'error'});
         }else{
         //save new user to db
             const salt =await bcrypt.genSalt(10);
@@ -76,7 +70,9 @@ router.get('/', (req,res) =>{
                     descr:`Confirmation link sent to your email.
                     Account not verified yet!`
                     });
-                return res.json({msg:'profile'});
+                const confirmText ='Click link below to cofirm your email';
+                    mail(email, confirmText);
+                return res.json({page:'profile'});
             });      
         } 
     })           

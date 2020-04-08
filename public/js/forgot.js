@@ -1,20 +1,14 @@
-const submit =document.querySelector('#register');
+const submit =document.querySelector('#forgot');
 
 submit.addEventListener('submit', async(e) =>{
     e.preventDefault();
 
     const email =document.querySelector('#email').value;
-    const first_name =document.querySelector('#first_name').value;
-    const last_name =document.querySelector('#last_name').value;
-    const password =document.querySelector("#password").value;
 
 const data={
-    email,
-    first_name,
-    last_name,
-    password
+    email
 };
-    const response =await fetch('/register', {
+    const response =await fetch('/forgot', {
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
         credentials: 'same-origin', // include, *same-origin, omit
@@ -32,5 +26,5 @@ const data={
   if(resJSON.page==='profile'){
     return window.location.href='/profile';
   }
-
+  
 });
