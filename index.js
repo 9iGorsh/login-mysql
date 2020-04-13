@@ -1,22 +1,39 @@
+'use strict';
+if(process.env.NODE_ENV !== 'production'){
+  require('dotenv').config();
+}
 const express =require('express');
 const cors =require('cors');
 const path =require('path');
 const hbs =require('hbs');
-// const { pool, connection } =require('./db');
-// const uuidv4 =require('uuid/v4'); //now deprecated
 const { v4: uuidv4 } = require('uuid'); //for CommonJS 
 const session =require('express-session');
 const FileStore =require('session-file-store')(session);
 const bodyParser =require('body-parser');
-const { passport } =require('./middleware/passport');
-// const mysql =require('mysql');
+const initializePassport =require('./middleware/passport-config');
+const passport =require('passport');
+const nocache = require('nocache');
+
+// const flash =require('express-flash');
 
 const app =express();
+
+initializePassport(app);
+
+app.use(nocache());
 app.use(cors());
+// app.set('etag', false);
 
 //set global vars:
-app.set('g_lobal',{g_title:'',g_name:'',g_email:'',g_descr:''});
-
+app.set('vars',{
+  title:'',
+  name:'',
+  email:'',
+  description:'',
+  active:'',
+  message:false,
+  profile:false
+});
 const staticPath =(__dirname, './public');
 app.use(express.static(staticPath));
 
@@ -30,6 +47,8 @@ app.set('views', viewsPath);
 // add & configure middleware
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
+
+// app.use(flash());
 app.use(session({
     genid: (req) => {
       console.log('Inside the session middleware genid f-n')
@@ -37,9 +56,9 @@ app.use(session({
       return uuidv4() // use UUIDs for session IDs
     },
     // store: new FileStore(), //defaults to a new MemoryStore instance
-    secret: 'keyboard cat',
+    secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: {
         httpOnly: true,
         // secure: true, //for https
@@ -55,20 +74,13 @@ app.use('/', require('./routes/auth/login'));
 app.use('/register', require('./routes/auth/register'));
 // app.use('/authrequired', require('./routes/auth/authrequired'));
 app.use('/profile', require('./routes/auth/profile'));
-app.use('/error', require('./routes/auth/error'));
+app.use('/message', require('./routes/auth/message'));
 app.use('/logout', require('./routes/auth/logout'));
 app.use('/verify', require('./routes/auth/verify'));
 app.use('/forgot', require('./routes/auth/forgot'));
 app.use('/resetpass', require('./routes/auth/resetpass'));
 app.use('/dashboard', require('./routes/auth/dashboard'));
-app.use('/passchange', require('./routes/auth/passchange'));
-
- app.get('/success', (req,res) =>{
-    res.render('success',{
-        title:'Success!',
-        name:'Игорь'
-    })
- });
+// app.use('/passchange', require('./routes/auth/passchange'));
 
 const PORT =process.env.PORT || 4000;
 app.listen(PORT, () =>(

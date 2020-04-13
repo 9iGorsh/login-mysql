@@ -10,18 +10,20 @@
       
         <div class="card card-panel blue-grey darken-3">
         <div class="card-content white-text">
-            <h2 class="center">{{title}}</h2>
+            <h3 class="center">{{title}}</h3>
             {{!-- <p>Account is unverified, pls confirm your email by clicking on the email link sent to you .</p> --}}
             <div class="center">
-                <p>{{descr}}</p>   
+                <p>{{description}}</p>   
                 <p>{{name}}</p>
                 <p>{{email}}</p>
             </div>
             
             </br>
-            <a href="/logout" class="btn-large btn-center waves-effect waves-light" type="submit" name="action">Log Out
-                <i class="material-icons right">exit_to_app</i>
-            </a>   
+            <form action="/dashboard" method="post">
+                <button class="exit btn-large btn-center waves-effect waves-light" type="submit" name="action">Home
+                    <i class="material-icons right">exit_to_app</i>
+                </button>   
+            </form>  
         </div>
         </div>
     </div>

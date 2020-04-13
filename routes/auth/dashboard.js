@@ -1,37 +1,36 @@
 const express =require('express');
 const router =express.Router();
+const { checkAuthenticated } =require('../../middleware/checkAuthenticated');
 
-router.get('/', (req,res) =>{
+router.get('/', checkAuthenticated, (req,res) =>{
 
     console.log('Inside GET /dashboard callback')
-    console.log('req.isAuthenticated ? ',req.isAuthenticated());
     // console.log('req.session.passport.userId:=======', req.session.passport.user)
-    console.log('req.user' ,req.user)
-    if(req.isAuthenticated()) {
-        // console.log("req.app:", req.app.get('g_lobal'))
-        // const{title, name, email, descr} =req.app.get('g_lobal');
-        const{name, email, descr, active} =req.user;
+    // console.log('req.user' ,req.user)
+        const{first_name, email, description, active} =req.user;
         if(!email){
             return res.redirect('/');
         }
         if(!active){
-            req.app.set('g_lobal',{
-                title:'Welcome',
-                name,
+            req.app.set('vars',{
+                title:'Unverified',
+                first_name,
                 email,
-                descr:'Account is unverified, pls confirm your email by clicking on the email link sent to you .'
+                description:'Account is unverified, pls confirm your email by clicking on the email link sent to you .'
               });
-            res.redirect('/profile')
+            return res.redirect('/profile')
         }       
         res.render('dashboard',{
             title:'Dashboard',
-            name,
+            first_name,
             email,
-            descr
+            description
         });
-    } else {
-      res.redirect('/')
-    }
  });
+
+router.post('/', (req, res) =>{
+    req.logout();
+    res.redirect('/');
+})
 
  module.exports = router;

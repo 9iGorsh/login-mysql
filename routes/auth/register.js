@@ -3,21 +3,22 @@ const router =express.Router();
 const { pool } =require('../../db');
 const bcrypt =require('bcrypt');
 const { mail } =require('../../mailer/mail');
+const { checkNotAuthenticated } =require('../../middleware/checkAuthenticated');
 
-router.get('/', (req,res) =>{
+router.get('/', checkNotAuthenticated, (req,res) =>{
     if(!req.user && !req.isAuthenticated()){
         return res.render('register',{
-          title:`Sign Up for Free`,
-          name:'Игорь'
+          title:`Sign Up for Free`
         })
       }
     return res.redirect('/dashboard'); 
  });
 
- router.post('/', (req,res) =>{
+ router.post('/', checkNotAuthenticated, (req,res) =>{
     console.log('Inside register POST route CB function'); 
      
     const{first_name, last_name, email, password} =req.body;
+    // console.log('email, password:',email, password);
 
     const makeConnection =() =>{
         pool.getConnection(async(err, connection) => {
@@ -39,18 +40,18 @@ router.get('/', (req,res) =>{
             return resolve(result[0]);
             });
         })
-        )
-        console.log('USER exists ?:',user)
+        );
+        // console.log('USER exists ?:',user)
      
         if (user) {
             console.log('User exists triggered!');///////////////
-            req.app.set('g_lobal',{
+            req.app.set('vars',{
                 title:'Error',
                 name:'',
                 email:'',
                 descr:`User ${email} already exists.`
                 });
-            return res.json({page:'error'});
+            return res.redirect('/error');
         }else{
         //save new user to db
             const salt =await bcrypt.genSalt(10);
@@ -63,16 +64,17 @@ router.get('/', (req,res) =>{
                 if(err){
                     return console.error(err);
                 }
-                req.app.set('g_lobal',{
-                    title:``,
+                req.app.set('vars',{
+                    title:`Confirmation email sent!`,
                     name:`${first_name} ${last_name}`,
                     email:email,
                     descr:`Confirmation link sent to your email.
-                    Account not verified yet!`
+                    Account not verified yet!`,
+                    profile:true
                     });
                 const confirmText ='Click link below to cofirm your email';
                     mail(email, confirmText);
-                return res.json({page:'profile'});
+                return res.redirect('/profile');
             });      
         } 
     })           

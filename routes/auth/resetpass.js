@@ -6,9 +6,23 @@ const { mail } =require('../../mailer/mail');
 const mysql =require('mysql');
 
 router.get('/', (req,res) =>{
-    const{email} =req.app.get('g_lobal');
+    let email ='';
+    let description =req.app.get('vars').description;
+    if(description !=='Your passwords do not match.'){
+        description ='';
+    }
+    if(req.isAuthenticated()){
+        email =req.user.email
+    }else{
+        email =req.app.get('vars').email;
+    } 
+    if(!email){
+        return res.redirect('/');
+    }
+    console.log('EMAIL, DESCR',email,description)
     res.render('resetPass',{
         title:'Reset your password',
+        description,
         email
     })
  });
@@ -16,9 +30,17 @@ router.get('/', (req,res) =>{
 router.post('/', (req,res) =>{
     console.log('Inside reset POST route CB function'); 
         
-    const{email, password} =req.body;
+    const{email, password, password2} =req.body;
     console.log('Reset email:', email)
     console.log('Reset password gotten:', password);
+
+    if(password !==password2){
+        req.app.set('vars',{
+            email,
+            description:'Your passwords do not match.'
+        });
+        return res.redirect('/resetpass');
+    }
 
     const makeConnection =() =>{
         pool.getConnection(async(err, connection) => {
@@ -41,14 +63,16 @@ router.post('/', (req,res) =>{
                 if(err){
                     return console.error(err);
                 }
-                req.app.set('g_lobal',{
+                req.app.set('vars',{
                     title:``,
                     // name:`${first_name} ${last_name}`,
                     email:email,
-                    descr:`Your password is set.
-                    You can log in now.`
+                    description:`Your password is set.
+                    You can log in now.`,
+                    message:true
                 });
-                return res.json({page:'profile'});
+                req.logout();
+                return res.redirect('/message');
             });       
         })           
     }

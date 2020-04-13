@@ -119,12 +119,10 @@ input[type=email]:not(.browser-default):focus:not([readonly]){
    }
 
    .emailForPass{
-     text-align: center;
+     color: #FFF;
    }
+  
    .pass-match{
-     display: none;
-   }
-   .pass-match--visible{
      position: absolute;
      bottom: 6px;
      left:0;
@@ -133,5 +131,11 @@ input[type=email]:not(.browser-default):focus:not([readonly]){
      text-align: center;
      background: #fff;
      color:red;
-     padding: 5px;
+     padding: 0 5px;
    }
+.wrapText{
+line-height: normal;
+height: auto;
+padding: 12px;
+font-size: smaller;
+}

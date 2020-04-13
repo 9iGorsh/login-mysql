@@ -26,17 +26,23 @@ router.get('/:token', async(req,res) =>{
           }  
           console.log('User is active now')   ///////////     
         }); 
-
-        req.app.set('g_lobal',{
-          title:`Success!`,
-          // name:`${first_name} ${last_name}`,
-          email:email,
-          descr:`You are verified now`
-          });
    
         if(resetpass){
+          req.app.set('vars',{
+            title:`Reset your password!`,
+            // name:`${first_name} ${last_name}`,
+            email:email,
+            description:''
+            });
           res.redirect('/resetpass');
         }else{
+          req.app.set('vars',{
+            title:`Success!`,
+            // name:`${first_name} ${last_name}`,
+            email:email,
+            description:`You are verified now`,
+            profile:true
+            });
             res.redirect('/profile');
         }
     })

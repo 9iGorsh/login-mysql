@@ -2,9 +2,10 @@ const express =require('express');
 const router =express.Router();
 const { pool } =require('../../db');
 const { mail } =require('../../mailer/mail');
+const { checkNotAuthenticated } =require('../../middleware/checkAuthenticated');
 
 //login GET and POST routes:
-router.get('/', (req,res) =>{
+router.get('/', checkNotAuthenticated, (req,res) =>{
     console.log('Inside login GET route CB function');
     console.log(req.sessionID);
     // const uniqueId = uuidv4();
@@ -14,7 +15,7 @@ router.get('/', (req,res) =>{
     })
 });
 
-router.post('/', (req,res) =>{
+router.post('/', checkNotAuthenticated, (req,res) =>{
     console.log('Inside forgot POST route CB function'); 
      
     const{email} =req.body;
@@ -42,24 +43,26 @@ router.post('/', (req,res) =>{
      
         if (!user) {
             console.log('User exists triggered!');///////////////
-            req.app.set('g_lobal',{
+            req.app.set('vars',{
                 title:'Error',
                 name:'',
                 email:'',
-                descr:`User ${email} does not exist.`
+                description:`User ${email} does not exist.`,
+                message:true
                 });
-            return res.json({page:'error'});
+            return res.redirect('/message');
         }else{
     //Send recover password email
-        req.app.set('g_lobal',{
-            title:``,
+        req.app.set('vars',{
+            title:`Success`,
             name:`${user.first_name} ${user.last_name}`,
             email:email,
-            descr:`Reset password link sent to your email.`
+            description:`Reset password link sent to your email.`,
+            profile:true
             });
         const confirmText ='Click link below to reset your password';
         mail(email,confirmText, true);
-        return res.json({page:'profile'});
+        return res.redirect('/profile');
         }
     })
     }

@@ -1,17 +1,18 @@
 const express =require('express');
 const router =express.Router();
+const { checkNotAuthenticated } =require('../../middleware/checkAuthenticated');
 
-router.get('/', (req,res) =>{
-    console.log("req.app:", req.app.get('g_lobal'))
-    const{title, name, email, descr} =req.app.get('g_lobal');
-    if(!email){
+router.get('/', checkNotAuthenticated, (req,res) =>{
+    // console.log("req.app:", req.app.get('vars'))
+    const{title, name, email, description, profile} =req.app.get('vars');
+    if(!email &&!profile){
         return res.redirect('/');
     }   
     res.render('profile',{
         title,
         name,
         email,
-        descr
+        description
     });
  });
 

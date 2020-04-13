@@ -9,26 +9,29 @@
       
         <div class="card card-panel blue-grey darken-3">
         <div class="card-content white-text">
-                   <h2 class="flow-text center">{{title}}</h2>
-                   <p class="emailForPass">{{email}}</p>
+                <a href="/" class="waves-effect waves-light btn btn-wide">Home</a>
+            <h2 class="flow-text center">{{title}}</h2>
             <form id="resetpass" action="/resetpass" method="post">               
-
                 <div class="row">
                     <div class="input-field col s12">
-                    <input id="password1" type="password" class="validate" required minlength="6">
+                        <input id="email" class="emailForPass" name="email" type="email" value="{{email}}" readonly>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="password" name="password" type="password" class="validate" required minlength="6">
                     <label for="password1">New password</label>
                     </div>
                 </div>
                <div class="row">
                     <div class="input-field col s12">
-                    <input id="password2" type="password" class="validate" required minlength="6">
+                        <input id="password2" name="password2" type="password" class="validate" required minlength="6">
                     <label for="password2">Repeat  new password</label>
                     </div>
                 </div>
                 <div class="base">
-                    <div class="pass-match"><p>Passports do not match</p></div>
+                    <div class="pass-match"><p>{{description}}</p></div>
                 </div>
-                
                 <button class="btn btn-center waves-effect waves-light" type="submit" name="action">Submit
                 <i class="material-icons right">send</i>
                 </button>       
@@ -38,5 +41,5 @@
       </div>
     </div>
 </div>
-<script src="/js/resetpass.js"></script>
+ 
 {{>footer}}
