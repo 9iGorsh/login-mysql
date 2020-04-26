@@ -2,9 +2,9 @@
   "name": "login-mysql-system",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "dev": "nodemon --ignore sessions/ index.js -e js,hbs,css"
+    "dev": "nodemon --ignore sessions/ app.js -e js,hbs,css"
   },
   "keywords": [],
   "author": "",

@@ -72,15 +72,12 @@ app.use(passport.session());
 
 app.use('/', require('./routes/auth/login'));
 app.use('/register', require('./routes/auth/register'));
-// app.use('/authrequired', require('./routes/auth/authrequired'));
 app.use('/profile', require('./routes/auth/profile'));
 app.use('/message', require('./routes/auth/message'));
-app.use('/logout', require('./routes/auth/logout'));
 app.use('/verify', require('./routes/auth/verify'));
 app.use('/forgot', require('./routes/auth/forgot'));
 app.use('/resetpass', require('./routes/auth/resetpass'));
-app.use('/dashboard', require('./routes/auth/dashboard'));
-// app.use('/passchange', require('./routes/auth/passchange'));
+app.use('/dashboard', require('./routes/user/dashboard'));
 
 const PORT =process.env.PORT || 4000;
 app.listen(PORT, () =>(

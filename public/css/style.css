@@ -81,61 +81,68 @@ input[type=email]:not(.browser-default):focus:not([readonly]){
      color: #e2e2e2;
    }
 
-   .btn-wide{
-     width: 48%;
-   }
-   .btn-center{
-     max-width: 58%;
-     margin:0 auto;
-     display: block;
-     padding: 0 15px;
-   }
+  .btn-wide{
+    width: 48%;
+  }
+  .btn-center{
+    max-width: 58%;
+    margin:0 auto;
+    display: block;
+    padding: 0 15px;
+  }
 
-   body{
-     background: url('/images/bg.jpg');
-   }
+  body{
+    background: url('/images/bg.jpg');
+  }
 
-   .forgot-rite{
-     text-align: right;
-     margin-top: -20px;
-     margin-bottom: 20px;
-   }
-   .forgot-rite >a{
-     color: #fff;
-   }
-   .forgot-rite >a:hover{
-     text-shadow:
-   -1px -1px 0 #000,  
-    1px -1px 0 #000,
-    -1px 1px 0 #000,
-     1px 1px 0 #000;
-   }
-   .opacity{
-     opacity: .5;
-   }
+  .forgot-rite{
+    text-align: right;
+    margin-top: -20px;
+    margin-bottom: 20px;
+  }
+  .forgot-rite >a{
+    color: #fff;
+  }
+  .forgot-rite >a:hover{
+    text-shadow:
+  -1px -1px 0 #000,  
+  1px -1px 0 #000,
+  -1px 1px 0 #000,
+    1px 1px 0 #000;
+  }
+  .opacity{
+    opacity: .5;
+  }
 
-   .base{
-     position: relative;
-   }
+  .base{
+    position: relative;
+  }
 
-   .emailForPass{
-     color: #FFF;
-   }
-  
-   .pass-match{
-     position: absolute;
-     bottom: 6px;
-     left:0;
-     right:0;
-     display: block;
-     text-align: center;
-     background: #fff;
-     color:red;
-     padding: 0 5px;
-   }
+.emailForPass{
+  color: #FFF;
+}
+
+.pass-match{
+  position: absolute;
+  bottom: 6px;
+  left:0;
+  right:0;
+  display: block;
+  text-align: center;
+  background: #fff;
+  color:red;
+  padding: 0 5px;
+}
+.pass-match--dash{
+  position: initial;
+}
 .wrapText{
 line-height: normal;
 height: auto;
 padding: 12px;
 font-size: smaller;
+}
+
+.not-visible{
+  display: none;
 }

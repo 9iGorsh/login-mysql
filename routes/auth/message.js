@@ -12,6 +12,13 @@ router.get('/', (req,res) =>{
         title,
         description
     });
+    req.app.set('vars',{
+        title:'',
+        name:'',
+        email:'',
+        description:'',
+        message:false
+    });
  });
 
  module.exports = router;
